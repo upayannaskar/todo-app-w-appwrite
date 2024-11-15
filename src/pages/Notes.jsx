@@ -1,30 +1,31 @@
-import {useEffect, useState} from 'react'
-import { databases } from '../appwrite/config'
+import { useEffect, useState } from 'react';
+import { databases } from '../appwrite/config';
 
 const Notes = () => {
-
   const [notes, setNotes] = useState([])
 
   useEffect(() => {
-    init()
-  }, [])
+    init();
+  }, []);
 
-  const init = async() => {
-    const response = await databases.listDocuments(import.meta.env.DATABASE_ID, import.meta.env.COLLECTION_TASKS_ID)
-    setNotes(response.documents)
-  }
+  const init = async () => {
+    const response = await databases.listDocuments(
+      import.meta.env.VITE_DATABASE_ID,
+      import.meta.env.VITE_COLLECTION_TASKS_ID
+    );
+    setNotes(response.documents);
+
+  };
+
   return (
     <div>
       <div>
-        {
-        notes.map(note => 
-          <div key={note.$id}>
-            {note.body}
-          </div>)
-        }
+        {notes.map((note) => (
+          <div key={note.$id}>{note.body}</div>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Notes
+export default Notes;
