@@ -4,12 +4,16 @@ import LoginRegister from "./pages/LoginRegister.jsx"
 
 function App() {
   return (
-    <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Notes />} />
-      <Route path="/login" element={<LoginRegister />} />
-    </Routes>
-    </BrowserRouter>
+    <div id="app">
+      <div className="container">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Notes />} />
+            <Route path="/login" element={<LoginRegister />} />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </div>
   )
 }
 

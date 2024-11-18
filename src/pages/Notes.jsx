@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react';
-import { databases } from '../appwrite/config';
+import db from "../appwrite/databases.js"
+import NoteForm from '../components/NoteForm.jsx';
+import { Query } from 'appwrite';
+import Note from "../components/Note.jsx"
 
 const Notes = () => {
   const [notes, setNotes] = useState([])
@@ -9,22 +12,27 @@ const Notes = () => {
   }, []);
 
   const init = async () => {
-    const response = await databases.listDocuments(
-      import.meta.env.VITE_DATABASE_ID,
-      import.meta.env.VITE_COLLECTION_TASKS_ID
-    );
-    setNotes(response.documents);
+    const response = await db.tasks.list(
+      [Query.orderDesc('$createdAt')]
+    )
 
+    setNotes(response.documents);
   };
 
   return (
-    <div>
+    <>
+      <div>
+        <h1>✍️ My Todo List</h1>
+      </div>
+
+      <NoteForm setNotes={setNotes} />
+      
       <div>
         {notes.map((note) => (
-          <div key={note.$id}>{note.body}</div>
+          <Note key={note.$id} noteData={note} setNotes={setNotes} />
         ))}
       </div>
-    </div>
+    </>
   );
 };
 
